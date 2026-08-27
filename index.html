@@ -1,0 +1,714 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧁</text></svg>">
+<title>Toko Dapur Manis</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap">
+
+<script id="shop-data" type="application/json">
+{
+  "shop": {
+    "nama": "Dapur Manis",
+    "tagline": "Brownies & Dessert · Cimahi",
+    "emoji": "🧁",
+    "wa": "0898-4618-900",
+    "bannerJudul": "Brownies Premium",
+    "bannerTeks": "Cokelat berkualitas, rasa yang intens, dipanggang tiap pagi.",
+    "infoBayar": "Pembayaran: transfer BCA 1234567890 a/n Dapur Manis, atau bayar di tempat.",
+    "pin": "1234"
+  },
+  "ongkir": [
+    { "nama": "GoSend", "estimasi": "1–2 jam", "harga": 10000 },
+    { "nama": "JNE Regular", "estimasi": "1–2 hari", "harga": 15000 },
+    { "nama": "Ambil di Toko", "estimasi": "Siap 30 menit", "harga": 0 }
+  ],
+  "produk": [
+    { "id":"p1", "nama":"Brownies Classic",   "ket":"Cokelat premium, lumer di mulut", "harga":28000, "emoji":"🍫", "kategori":"Brownies", "aktif":true },
+    { "id":"p2", "nama":"Brownies Cheese",    "ket":"Perpaduan cokelat dan keju",      "harga":32000, "emoji":"🧀", "kategori":"Brownies", "aktif":true },
+    { "id":"p3", "nama":"Brownies Nutella",   "ket":"Topping hazelnut melimpah",       "harga":38000, "emoji":"🥜", "kategori":"Brownies", "aktif":true },
+    { "id":"p4", "nama":"Strawberry Cake",    "ket":"Sponge lembut, stroberi segar",   "harga":78000, "emoji":"🍰", "kategori":"Cake",     "aktif":true },
+    { "id":"p5", "nama":"Red Velvet Slice",   "ket":"Cream cheese frosting klasik",    "harga":35000, "emoji":"🎂", "kategori":"Cake",     "aktif":true },
+    { "id":"p6", "nama":"Choco Chip Cookies", "ket":"Renyah di luar, chewy di dalam",  "harga":24000, "emoji":"🍪", "kategori":"Cookies",  "aktif":true },
+    { "id":"p7", "nama":"Cookies Almond",     "ket":"Panggang harian, kacang almond",  "harga":26000, "emoji":"🌰", "kategori":"Cookies",  "aktif":true },
+    { "id":"p8", "nama":"Puding Cokelat",     "ket":"Dessert box dingin, porsi besar", "harga":30000, "emoji":"🍮", "kategori":"Lainnya",  "aktif":true }
+  ]
+}
+</script>
+
+<style>
+:root{
+  --ink:#241A11; --ink-2:#5C4B3B; --ink-3:#9B8974;
+  --line:#E6DCC9; --line-2:#F1EADC;
+  --page:#EFE7D8; --card:#FBF7F0;
+  --green:#22B558; --green-d:#0E7A3C; --green-w:#E4F1E2;
+  --red:#C63F3F; --red-w:#F7E3E1;
+  --sh-s:0 1px 2px rgba(60,40,20,.06);
+  --sh-m:0 1px 3px rgba(60,40,20,.07), 0 10px 26px -16px rgba(60,40,20,.32);
+  --sh-pop:0 -6px 30px -12px rgba(60,40,20,.28);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ink:#F1E7D9; --ink-2:#C3B29B; --ink-3:#8E7C67;
+    --line:#3A2E22; --line-2:#2A2119;
+    --page:#171109; --card:#221A11;
+    --green:#2FBF67; --green-d:#8FDDAC; --green-w:#1B2C1B;
+    --red:#E37272; --red-w:#33191A;
+    --sh-s:0 1px 2px rgba(0,0,0,.5);
+    --sh-m:0 1px 3px rgba(0,0,0,.5), 0 10px 26px -16px rgba(0,0,0,.85);
+    --sh-pop:0 -6px 30px -12px rgba(0,0,0,.9);
+  }
+}
+:root[data-theme="dark"]{
+  --ink:#F1E7D9; --ink-2:#C3B29B; --ink-3:#8E7C67;
+  --line:#3A2E22; --line-2:#2A2119;
+  --page:#171109; --card:#221A11;
+  --green:#2FBF67; --green-d:#8FDDAC; --green-w:#1B2C1B;
+  --red:#E37272; --red-w:#33191A;
+  --sh-s:0 1px 2px rgba(0,0,0,.5);
+  --sh-m:0 1px 3px rgba(0,0,0,.5), 0 10px 26px -16px rgba(0,0,0,.85);
+  --sh-pop:0 -6px 30px -12px rgba(0,0,0,.9);
+}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--page);color:var(--ink);
+  font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{font-family:"Plus Jakarta Sans",Inter,sans-serif;margin:0;text-wrap:balance}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+input,textarea,select{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--green);outline-offset:2px;border-radius:4px}
+.num{font-variant-numeric:tabular-nums}
+svg{display:block}
+.wrap{max-width:520px;margin:0 auto;min-height:100vh;background:var(--card);box-shadow:var(--sh-m)}
+@media(min-width:560px){.wrap{margin:22px auto;min-height:0;border-radius:20px;overflow:hidden;border:1px solid var(--line)}}
+
+/* header toko */
+.shop{display:flex;align-items:center;gap:11px;padding:16px 16px 12px}
+.ava{width:44px;height:44px;border-radius:13px;flex:none;display:grid;place-items:center;font-size:22px;background:linear-gradient(155deg,#F6E3C9,#E7C69B)}
+.shop .nm{font-family:"Plus Jakarta Sans",sans-serif;font-weight:700;font-size:17px;letter-spacing:-.02em}
+.shop .sb{font-size:12.5px;color:var(--ink-3)}
+.wadot{margin-left:auto;width:36px;height:36px;border-radius:50%;background:var(--green-w);color:var(--green-d);display:grid;place-items:center;flex:none}
+.wadot svg{width:19px;height:19px}
+
+.banner{position:relative;overflow:hidden;margin:0 16px;border-radius:15px;padding:20px;color:#fff;background:linear-gradient(115deg,#3A2216,#6A3C22 52%,#8B5830)}
+.banner h3{font-size:21px;line-height:1.15;letter-spacing:-.02em;font-weight:800;max-width:12ch}
+.banner p{margin:7px 0 0;font-size:12.5px;opacity:.84;max-width:26ch;line-height:1.45}
+.banner .glow{position:absolute;right:-40px;top:-32px;width:150px;height:150px;border-radius:50%;background:radial-gradient(circle,rgba(255,213,150,.5),transparent 68%)}
+
+.cats{display:flex;gap:8px;padding:16px 16px 2px;overflow-x:auto;scrollbar-width:none}
+.cats::-webkit-scrollbar{display:none}
+.cats button{flex:none;padding:7px 14px;border-radius:999px;border:1px solid var(--line);font-size:13px;font-weight:600;color:var(--ink-2);background:var(--card)}
+.cats button[aria-pressed="true"]{background:var(--green-w);border-color:var(--green);color:var(--green-d)}
+
+.sech{padding:18px 16px 10px;font-size:15px;font-weight:700;letter-spacing:-.015em;font-family:"Plus Jakarta Sans",sans-serif}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:0 16px 120px}
+.prod{border:1px solid var(--line);border-radius:15px;overflow:hidden;display:flex;flex-direction:column;background:var(--card)}
+.prod .ph{height:96px;display:grid;place-items:center;font-size:36px}
+.prod .bd{padding:10px 11px 11px;display:flex;flex-direction:column;flex:1;gap:3px}
+.prod .t{font-family:"Plus Jakarta Sans",sans-serif;font-weight:700;font-size:13.5px;letter-spacing:-.01em}
+.prod .d{font-size:11.5px;color:var(--ink-3);line-height:1.35;flex:1}
+.prod .rw{display:flex;align-items:center;justify-content:space-between;margin-top:8px;gap:6px}
+.prod .p{font-weight:600;font-size:13.5px}
+.plus{width:30px;height:30px;border-radius:9px;background:var(--green);color:#fff;display:grid;place-items:center;font-size:18px;line-height:1;flex:none}
+.instep{display:flex;align-items:center;gap:8px;border:1px solid var(--green);border-radius:999px;padding:2px 4px}
+.instep button{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;color:var(--green-d);font-size:15px;line-height:1}
+.instep b{font-size:13px;min-width:10px;text-align:center}
+
+.empty{padding:50px 20px;text-align:center;color:var(--ink-3);font-size:14px}
+
+/* bar keranjang */
+.cartbar{
+  position:fixed;left:0;right:0;bottom:0;z-index:20;
+  max-width:520px;margin:0 auto;padding:12px 14px calc(12px + env(safe-area-inset-bottom));
+  background:var(--card);border-top:1px solid var(--line);box-shadow:var(--sh-pop);
+  transition:transform .26s cubic-bezier(.3,1.2,.5,1);
+}
+.cartbar[hidden]{display:block;transform:translateY(130%)}
+.cartbar .in{display:flex;align-items:center;gap:12px;background:var(--green);color:#fff;border-radius:14px;padding:11px 14px;width:100%}
+.cartbar .ic{position:relative;width:32px;height:32px;border-radius:10px;background:rgba(255,255,255,.18);display:grid;place-items:center}
+.cartbar .ic svg{width:17px;height:17px}
+.cartbar .bdg{position:absolute;top:-5px;right:-5px;min-width:18px;height:18px;padding:0 5px;border-radius:9px;background:#fff;color:var(--green-d);font-size:11px;font-weight:700;display:grid;place-items:center}
+.cartbar .lb{font-family:"Plus Jakarta Sans",sans-serif;font-weight:700;font-size:14px;display:block;text-align:left}
+.cartbar .am{font-size:12px;opacity:.88}
+.cartbar .go{margin-left:auto;font-size:19px}
+
+/* halaman dalam */
+.nav{display:flex;align-items:center;gap:12px;padding:14px 16px}
+.nav .back{width:32px;height:32px;border-radius:10px;border:1px solid var(--line);display:grid;place-items:center;color:var(--ink-2);font-size:17px}
+.nav h2{font-size:16px;font-weight:700;letter-spacing:-.015em;margin:0 auto 0 0}
+.pad{padding:0 16px 150px}
+
+.li{display:flex;gap:11px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line-2)}
+.li .ph{width:54px;height:54px;border-radius:12px;display:grid;place-items:center;font-size:25px;flex:none;background:var(--line-2)}
+.li .t{font-family:"Plus Jakarta Sans",sans-serif;font-weight:600;font-size:14px}
+.li .p{font-size:12.5px;color:var(--ink-3)}
+
+label.fl{display:block;margin:15px 0 6px;font-size:12.5px;font-weight:600;color:var(--ink-2)}
+.fi{width:100%;padding:12px 13px;border-radius:11px;border:1px solid var(--line);background:var(--card);font-size:15px}
+.fi:focus{border-color:var(--green);outline:none;box-shadow:0 0 0 3px var(--green-w)}
+textarea.fi{resize:vertical;min-height:70px;line-height:1.5}
+.err{border-color:var(--red)!important;box-shadow:0 0 0 3px var(--red-w)}
+.errmsg{color:var(--red);font-size:12px;margin-top:5px}
+
+.ship{display:grid;gap:9px;margin-top:8px}
+.ship label{display:flex;align-items:center;gap:11px;padding:12px 13px;border-radius:12px;border:1px solid var(--line);cursor:pointer}
+.ship label:has(input:checked){border-color:var(--green);background:var(--green-w)}
+.ship input{accent-color:var(--green);width:17px;height:17px;flex:none}
+.ship .nm{font-size:14px;font-weight:600;font-family:"Plus Jakarta Sans",sans-serif}
+.ship .et{font-size:11.5px;color:var(--ink-3)}
+.ship .pr{margin-left:auto;font-size:13.5px;font-weight:600}
+
+.tot{margin-top:20px;padding-top:14px;border-top:1px dashed var(--line);display:grid;gap:8px}
+.tot .r{display:flex;justify-content:space-between;font-size:13.5px;color:var(--ink-2)}
+.tot .r.b{font-size:16px;font-weight:700;color:var(--ink);font-family:"Plus Jakarta Sans",sans-serif;padding-top:9px;border-top:1px solid var(--line-2)}
+
+.stick{position:fixed;left:0;right:0;bottom:0;z-index:20;max-width:520px;margin:0 auto;padding:12px 16px calc(12px + env(safe-area-inset-bottom));background:var(--card);border-top:1px solid var(--line);box-shadow:var(--sh-pop)}
+.gbtn{width:100%;padding:15px;border-radius:13px;background:var(--green);color:#fff;font-family:"Plus Jakarta Sans",sans-serif;font-weight:700;font-size:15px;display:flex;align-items:center;justify-content:center;gap:9px;text-decoration:none}
+.gbtn svg{width:19px;height:19px}
+.gbtn[disabled],.gbtn.off{opacity:.45;pointer-events:none}
+.gbtn.ghost{background:none;color:var(--ink-2);border:1px solid var(--line);margin-top:9px;font-size:14px;padding:12px}
+.hintline{margin-top:10px;font-size:11.5px;color:var(--ink-3);text-align:center;display:flex;align-items:center;justify-content:center;gap:6px}
+.hintline svg{width:13px;height:13px}
+
+.okmark{width:66px;height:66px;border-radius:50%;background:var(--green);color:#fff;margin:26px auto 16px;display:grid;place-items:center}
+.okmark svg{width:32px;height:32px}
+.ok-h{font-size:22px;font-weight:800;letter-spacing:-.025em;text-align:center;line-height:1.2;font-family:"Plus Jakarta Sans",sans-serif}
+.ok-p{font-size:13.5px;color:var(--ink-3);text-align:center;margin:10px auto 20px;max-width:30ch;line-height:1.5}
+.recap{border:1px solid var(--line);border-radius:14px;padding:15px}
+.recap h4{font-size:11.5px;text-transform:uppercase;letter-spacing:.09em;color:var(--ink-3);font-weight:600;font-family:Inter,sans-serif;margin-bottom:10px}
+.recap .tot{margin:0;padding:0;border:0}
+.preview{margin-top:14px;border-radius:14px;padding:13px 14px;background:var(--green-w);border:1px solid color-mix(in srgb,var(--green) 28%,transparent);font-size:12.5px;line-height:1.6;color:var(--ink-2);white-space:pre-wrap;max-height:190px;overflow:auto}
+.payinfo{margin-top:12px;font-size:12.5px;color:var(--ink-2);background:var(--line-2);border-radius:12px;padding:12px 13px;line-height:1.5}
+
+/* admin */
+.abar{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--line);background:var(--line-2)}
+.abar h2{font-size:16px;font-weight:800;letter-spacing:-.02em;margin-right:auto}
+.abar .tag{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--green-d);background:var(--green-w);padding:4px 9px;border-radius:999px}
+.atabs{display:flex;gap:3px;padding:12px 16px 0}
+.atabs button{flex:1;padding:9px;border-radius:10px;font-size:13.5px;font-weight:600;color:var(--ink-3);border:1px solid transparent}
+.atabs button[aria-selected="true"]{background:var(--green-w);color:var(--green-d);border-color:var(--green)}
+.acard{border:1px solid var(--line);border-radius:14px;padding:13px;margin-top:12px}
+.acard .hd{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.acard .hd .e{width:38px;height:38px;border-radius:11px;background:var(--line-2);display:grid;place-items:center;font-size:19px;flex:none}
+.acard .hd .t{font-family:"Plus Jakarta Sans",sans-serif;font-weight:700;font-size:14px;flex:1}
+.mini2{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.mini2 .fi{padding:9px 11px;font-size:14px}
+.iconbtn{width:32px;height:32px;border-radius:9px;border:1px solid var(--line);display:grid;place-items:center;color:var(--ink-3);font-size:14px}
+.iconbtn.del:hover{color:var(--red);border-color:var(--red)}
+.switch{display:flex;align-items:center;gap:7px;font-size:12.5px;color:var(--ink-2)}
+.switch input{accent-color:var(--green);width:16px;height:16px}
+.addbtn{width:100%;margin-top:12px;padding:13px;border-radius:12px;border:1px dashed var(--line);color:var(--ink-2);font-weight:600;font-size:14px}
+.toast{
+  position:fixed;left:50%;bottom:24px;transform:translate(-50%,140%);z-index:60;
+  background:var(--ink);color:var(--page);padding:11px 18px;border-radius:999px;font-size:13.5px;font-weight:600;
+  transition:transform .3s cubic-bezier(.3,1.2,.5,1);max-width:90vw;text-align:center;
+}
+.toast.on{transform:translate(-50%,0)}
+.note{font-size:12.5px;color:var(--ink-3);line-height:1.55;margin-top:14px}
+.adminlink{display:block;text-align:center;padding:22px 16px 34px;font-size:12px;color:var(--ink-3)}
+</style>
+
+<div class="wrap" id="app"></div>
+<div class="toast" id="toast"></div>
+
+<script>
+"use strict";
+const rp = n => "Rp" + Number(n||0).toLocaleString("id-ID");
+const el = id => document.getElementById(id);
+const esc = s => String(s??"").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+const BAKED = JSON.parse(el("shop-data").textContent);
+const KEY_DATA = "waorder:data:v1";
+const KEY_CART = "waorder:cart:v1";
+const KEY_BUYER = "waorder:buyer:v1";
+
+const load = (k, fb) => { try{ const v = localStorage.getItem(k); return v ? JSON.parse(v) : fb; }catch(e){ return fb; } };
+const save = (k, v) => { try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} };
+
+// Data toko: versi hasil edit admin di perangkat ini menang; kalau tidak ada, pakai yang tertanam di file.
+let DATA = load(KEY_DATA, null) || structuredClone(BAKED);
+let cart = load(KEY_CART, {});
+let buyer = load(KEY_BUYER, {nama:"", wa:"", alamat:"", catatan:"", ongkir:0});
+let screen = "katalog", kategori = "Semua", tried = false, adminTab = "produk";
+
+function toast(msg){
+  const t = el("toast"); t.textContent = msg; t.classList.add("on");
+  clearTimeout(toast._t); toast._t = setTimeout(()=>t.classList.remove("on"), 2200);
+}
+
+/* ---------- hitung ---------- */
+const aktif = () => DATA.produk.filter(p => p.aktif !== false);
+const cariProduk = id => DATA.produk.find(p => p.id === id);
+const isiKeranjang = () => Object.entries(cart)
+  .map(([id,q]) => { const p = cariProduk(id); return p ? {...p, q} : null; })
+  .filter(Boolean);
+const jumlah = () => isiKeranjang().reduce((a,i)=>a+i.q,0);
+const subtotal = () => isiKeranjang().reduce((a,i)=>a+i.harga*i.q,0);
+const ongkirDipilih = () => DATA.ongkir[buyer.ongkir] || DATA.ongkir[0] || {nama:"—", harga:0};
+const total = () => subtotal() + (jumlah() ? ongkirDipilih().harga : 0);
+
+function setCart(id, q){
+  if(q <= 0) delete cart[id]; else cart[id] = q;
+  save(KEY_CART, cart); render();
+}
+
+/* ---------- nomor & pesan WhatsApp ---------- */
+function noWA(){
+  let d = String(DATA.shop.wa||"").replace(/\D/g,"");
+  if(d.startsWith("0")) d = "62" + d.slice(1);
+  else if(d.startsWith("620")) d = "62" + d.slice(3);
+  else if(d && !d.startsWith("62")) d = "62" + d;
+  return d;
+}
+function kodeOrder(){
+  const d = new Date();
+  const p = n => String(n).padStart(2,"0");
+  return `${p(d.getDate())}${p(d.getMonth()+1)}-${p(d.getHours())}${p(d.getMinutes())}`;
+}
+function pesanWA(kode){
+  const o = ongkirDipilih();
+  return [
+    `*ORDER BARU — ${DATA.shop.nama}*`,
+    `No. order: ${kode}`, "",
+    ...isiKeranjang().map(i => `• ${i.nama} ×${i.q} — ${rp(i.harga*i.q)}`), "",
+    `Subtotal: ${rp(subtotal())}`,
+    `Ongkir (${o.nama}): ${o.harga ? rp(o.harga) : "Gratis"}`,
+    `*Total: ${rp(total())}*`, "",
+    `Nama: ${buyer.nama || "—"}`,
+    `WhatsApp: ${buyer.wa || "—"}`,
+    `Alamat: ${buyer.alamat || "—"}`,
+    `Catatan: ${buyer.catatan || "—"}`
+  ].join("\n");
+}
+
+/* ---------- ikon ---------- */
+const IC_WA = `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-1.7-.1-.4-.1-.9-.3-1.6-.6-2.8-1.2-4.6-4-4.7-4.2-.1-.2-1.1-1.4-1.1-2.7 0-1.3.7-1.9.9-2.2.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.3 0 .5l-.3.4-.3.4c-.1.1-.2.3 0 .5.2.3.8 1.3 1.7 2.1 1.1 1 2 1.3 2.3 1.4.2.1.4.1.5-.1l.7-.9c.2-.2.3-.2.5-.1l2 1c.2.1.4.2.4.3.1.1.1.6-.1 1.2Z"/></svg>`;
+const IC_CART = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2 3h3l2.4 11.4a2 2 0 0 0 2 1.6h7.7a2 2 0 0 0 2-1.6L21 7H6"/></svg>`;
+const IC_LOCK = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>`;
+
+/* ---------- layar ---------- */
+function viewKatalog(){
+  const kats = ["Semua", ...[...new Set(aktif().map(p => p.kategori || "Lainnya"))]];
+  const list = kategori === "Semua" ? aktif() : aktif().filter(p => (p.kategori||"Lainnya") === kategori);
+  return `
+    <div class="shop">
+      <div class="ava">${esc(DATA.shop.emoji||"🛍")}</div>
+      <div><div class="nm">${esc(DATA.shop.nama)}</div><div class="sb">${esc(DATA.shop.tagline)}</div></div>
+      <a class="wadot" href="https://wa.me/${noWA()}" target="_blank" rel="noopener noreferrer" aria-label="Chat penjual di WhatsApp">${IC_WA}</a>
+    </div>
+    ${DATA.shop.bannerJudul ? `
+    <div class="banner"><div class="glow"></div>
+      <h3>${esc(DATA.shop.bannerJudul)}</h3>
+      <p>${esc(DATA.shop.bannerTeks)}</p>
+    </div>` : ""}
+    <div class="cats">${kats.map(k => `<button type="button" data-kat="${esc(k)}" aria-pressed="${k===kategori}">${esc(k)}</button>`).join("")}</div>
+    <div class="sech">${kategori === "Semua" ? "Semua Produk" : esc(kategori)}</div>
+    ${list.length ? `<div class="grid">${list.map(kartuProduk).join("")}</div>`
+      : `<div class="empty">Belum ada produk di kategori ini.</div>`}
+    <button class="adminlink" type="button" data-go="gate">Kelola toko (khusus penjual)</button>`;
+}
+
+function kartuProduk(p){
+  const q = cart[p.id] || 0;
+  return `
+    <article class="prod">
+      <div class="ph" style="background:var(--line-2)">${esc(p.emoji||"🍽")}</div>
+      <div class="bd">
+        <div class="t">${esc(p.nama)}</div>
+        <div class="d">${esc(p.ket||"")}</div>
+        <div class="rw">
+          <span class="p num">${rp(p.harga)}</span>
+          ${q ? `<span class="instep">
+                   <button type="button" data-q="${p.id}:${q-1}" aria-label="Kurangi ${esc(p.nama)}">−</button>
+                   <b class="num">${q}</b>
+                   <button type="button" data-q="${p.id}:${q+1}" aria-label="Tambah ${esc(p.nama)}">+</button>
+                 </span>`
+               : `<button class="plus" type="button" data-q="${p.id}:1" aria-label="Tambah ${esc(p.nama)}">+</button>`}
+        </div>
+      </div>
+    </article>`;
+}
+
+function viewKeranjang(){
+  const items = isiKeranjang();
+  return `
+    <div class="nav"><button class="back" type="button" data-go="katalog" aria-label="Kembali">‹</button><h2>Keranjang</h2></div>
+    <div class="pad">
+      ${items.length ? items.map(i => `
+        <div class="li">
+          <div class="ph">${esc(i.emoji||"🍽")}</div>
+          <div><div class="t">${esc(i.nama)}</div><div class="p num">${rp(i.harga)}</div></div>
+          <span class="instep" style="margin-left:auto">
+            <button type="button" data-q="${i.id}:${i.q-1}" aria-label="Kurangi">−</button>
+            <b class="num">${i.q}</b>
+            <button type="button" data-q="${i.id}:${i.q+1}" aria-label="Tambah">+</button>
+          </span>
+        </div>`).join("") : `<div class="empty">Keranjang masih kosong.</div>`}
+      <div class="tot">
+        <div class="r"><span>Subtotal (${jumlah()} item)</span><span class="num">${rp(subtotal())}</span></div>
+      </div>
+    </div>
+    <div class="stick">
+      <button class="gbtn ${items.length?"":"off"}" type="button" data-go="data">Lanjut Isi Data</button>
+    </div>`;
+}
+
+function viewData(){
+  const o = DATA.ongkir;
+  return `
+    <div class="nav"><button class="back" type="button" data-go="keranjang" aria-label="Kembali">‹</button><h2>Data Pengiriman</h2></div>
+    <div class="pad">
+      <label class="fl" for="i-nama">Nama Lengkap</label>
+      <input class="fi" id="i-nama" value="${esc(buyer.nama)}" placeholder="Nama kamu" autocomplete="name">
+      <div class="errmsg" id="e-nama" hidden>Nama masih kosong.</div>
+
+      <label class="fl" for="i-wa">No. WhatsApp</label>
+      <input class="fi num" id="i-wa" value="${esc(buyer.wa)}" placeholder="08xx xxxx xxxx" inputmode="tel" autocomplete="tel">
+      <div class="errmsg" id="e-wa" hidden>Nomor WhatsApp minimal 9 angka.</div>
+
+      <label class="fl" for="i-alamat">Alamat Pengiriman</label>
+      <textarea class="fi" id="i-alamat" placeholder="Jalan, nomor rumah, kecamatan, kota">${esc(buyer.alamat)}</textarea>
+      <div class="errmsg" id="e-alamat" hidden>Alamat masih kosong.</div>
+
+      <label class="fl" for="i-catatan">Catatan untuk penjual (opsional)</label>
+      <textarea class="fi" id="i-catatan" placeholder="Contoh: potong 4 bagian, tulis happy birthday">${esc(buyer.catatan)}</textarea>
+
+      <label class="fl">Opsi Pengiriman</label>
+      <div class="ship">
+        ${o.map((s,i) => `
+          <label>
+            <input type="radio" name="ongkir" value="${i}" ${i===Number(buyer.ongkir)?"checked":""}>
+            <span><span class="nm">${esc(s.nama)}</span><br><span class="et">${esc(s.estimasi||"")}</span></span>
+            <span class="pr num">${s.harga ? rp(s.harga) : "Gratis"}</span>
+          </label>`).join("")}
+      </div>
+
+      <div class="tot">
+        <div class="r"><span>Subtotal (${jumlah()} item)</span><span class="num">${rp(subtotal())}</span></div>
+        <div class="r"><span>Ongkir (${esc(ongkirDipilih().nama)})</span><span class="num">${ongkirDipilih().harga ? rp(ongkirDipilih().harga) : "Gratis"}</span></div>
+        <div class="r b"><span>Total</span><span class="num">${rp(total())}</span></div>
+      </div>
+    </div>
+    <div class="stick"><button class="gbtn" type="button" data-go="konfirmasi">Lanjut ke Konfirmasi</button></div>`;
+}
+
+function viewKonfirmasi(){
+  const kode = viewKonfirmasi.kode || (viewKonfirmasi.kode = kodeOrder());
+  const pesan = pesanWA(kode);
+  const href = "https://wa.me/" + noWA() + "?text=" + encodeURIComponent(pesan);
+  const o = ongkirDipilih();
+  return `
+    <div class="nav"><button class="back" type="button" data-go="data" aria-label="Kembali">‹</button><h2>Konfirmasi Order</h2></div>
+    <div class="pad">
+      <div class="okmark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m4 12 6 6L20 6"/></svg></div>
+      <div class="ok-h">Order Siap Dikirim<br>via WhatsApp</div>
+      <p class="ok-p">Tekan tombol di bawah — WhatsApp akan terbuka dengan pesan yang sudah terisi. Kamu tinggal tekan kirim.</p>
+
+      <div class="recap">
+        <h4>Order ${esc(kode)}</h4>
+        <div class="tot">
+          <div class="r"><span>${jumlah()} item</span><span class="num">${rp(subtotal())}</span></div>
+          <div class="r"><span>Ongkir (${esc(o.nama)})</span><span class="num">${o.harga ? rp(o.harga) : "Gratis"}</span></div>
+          <div class="r b"><span>Total</span><span class="num">${rp(total())}</span></div>
+        </div>
+      </div>
+
+      <div class="preview">${esc(pesan)}</div>
+      ${DATA.shop.infoBayar ? `<div class="payinfo">${esc(DATA.shop.infoBayar)}</div>` : ""}
+    </div>
+    <div class="stick">
+      <a class="gbtn" id="kirim" href="${href}" target="_blank" rel="noopener noreferrer">${IC_WA} Kirim Order via WhatsApp</a>
+      <div class="hintline">${IC_LOCK} Data kamu hanya dikirim ke penjual lewat WhatsApp</div>
+    </div>`;
+}
+
+function viewSelesai(){
+  return `
+    <div class="pad" style="padding-top:60px">
+      <div class="okmark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m4 12 6 6L20 6"/></svg></div>
+      <div class="ok-h">Terima kasih!</div>
+      <p class="ok-p">Kalau WhatsApp sudah terbuka, jangan lupa tekan tombol kirim di sana supaya order kamu benar-benar sampai ke ${esc(DATA.shop.nama)}.</p>
+      <button class="gbtn" type="button" data-go="katalog" style="margin-top:8px">Belanja Lagi</button>
+      <a class="gbtn ghost" href="https://wa.me/${noWA()}" target="_blank" rel="noopener noreferrer">Chat Penjual</a>
+    </div>`;
+}
+
+/* ---------- gerbang PIN penjual ---------- */
+function viewGate(){
+  return `
+    <div class="nav"><button class="back" type="button" data-go="katalog" aria-label="Kembali">‹</button><h2>Masuk sebagai Penjual</h2></div>
+    <div class="pad">
+      <p class="note" style="margin-top:4px">Halaman ini untuk pemilik toko. Masukkan PIN untuk mengubah produk, harga, dan pengaturan toko.</p>
+      <label class="fl" for="i-pin">PIN Penjual</label>
+      <input class="fi num" id="i-pin" type="password" inputmode="numeric" placeholder="••••" autocomplete="off">
+      <div class="errmsg" id="e-pin" hidden>PIN salah.</div>
+      <button class="gbtn" type="button" id="masuk" style="margin-top:18px">Masuk</button>
+    </div>`;
+}
+
+/* ---------- admin ---------- */
+function viewAdmin(){
+  const t = adminTab;
+  return `
+    <div class="abar">
+      <h2>Kelola Toko</h2><span class="tag">Penjual</span>
+      <button class="iconbtn" type="button" data-go="katalog" aria-label="Tutup">✕</button>
+    </div>
+    <div class="atabs">
+      <button type="button" data-atab="produk" aria-selected="${t==='produk'}">Produk</button>
+      <button type="button" data-atab="toko" aria-selected="${t==='toko'}">Toko</button>
+      <button type="button" data-atab="ongkir" aria-selected="${t==='ongkir'}">Ongkir</button>
+    </div>
+    <div class="pad" style="padding-top:4px;padding-bottom:170px">
+      ${t==="produk" ? adminProduk() : t==="toko" ? adminToko() : adminOngkir()}
+      <div class="note">
+        Perubahan langsung tersimpan di HP/laptop ini. Supaya pembeli ikut melihat versi terbaru,
+        unduh datanya lalu kirim ke Claude untuk ditanam permanen ke halaman toko.
+      </div>
+    </div>
+    <div class="stick">
+      <button class="gbtn" type="button" id="unduh">Unduh Data Toko</button>
+      <button class="gbtn ghost" type="button" id="salin">Salin Data ke Clipboard</button>
+      <button class="gbtn ghost" type="button" id="reset">Kembalikan ke Data Asli</button>
+    </div>`;
+}
+
+function adminProduk(){
+  return DATA.produk.map((p,i) => `
+    <div class="acard">
+      <div class="hd">
+        <span class="e">${esc(p.emoji||"🍽")}</span>
+        <span class="t">${esc(p.nama||"Produk baru")}</span>
+        <button class="iconbtn del" type="button" data-hapus="${i}" aria-label="Hapus ${esc(p.nama)}">🗑</button>
+      </div>
+      <input class="fi" data-p="${i}:nama" value="${esc(p.nama)}" placeholder="Nama produk" aria-label="Nama produk">
+      <div style="height:9px"></div>
+      <input class="fi" data-p="${i}:ket" value="${esc(p.ket||"")}" placeholder="Keterangan singkat" aria-label="Keterangan">
+      <div style="height:9px"></div>
+      <div class="mini2">
+        <input class="fi num" data-p="${i}:harga" value="${p.harga}" inputmode="numeric" placeholder="Harga" aria-label="Harga">
+        <input class="fi" data-p="${i}:kategori" value="${esc(p.kategori||"")}" placeholder="Kategori" aria-label="Kategori">
+        <input class="fi" data-p="${i}:emoji" value="${esc(p.emoji||"")}" placeholder="Emoji" aria-label="Emoji">
+        <label class="switch"><input type="checkbox" data-p="${i}:aktif" ${p.aktif!==false?"checked":""}>Tampilkan</label>
+      </div>
+    </div>`).join("") + `<button class="addbtn" type="button" id="tambah">+ Tambah Produk</button>`;
+}
+
+function adminToko(){
+  const s = DATA.shop;
+  const f = (k,label,ph="") => `
+    <label class="fl" for="s-${k}">${label}</label>
+    <input class="fi" id="s-${k}" data-s="${k}" value="${esc(s[k]||"")}" placeholder="${esc(ph)}">`;
+  return `
+    ${f("nama","Nama Toko")}
+    ${f("tagline","Keterangan Singkat","Brownies & Dessert · Cimahi")}
+    ${f("emoji","Emoji Toko","🧁")}
+    ${f("wa","No. WhatsApp Penjual","08xx xxxx xxxx")}
+    ${f("bannerJudul","Judul Banner","Kosongkan kalau tidak mau pakai banner")}
+    <label class="fl" for="s-bannerTeks">Teks Banner</label>
+    <textarea class="fi" id="s-bannerTeks" data-s="bannerTeks">${esc(s.bannerTeks||"")}</textarea>
+    <label class="fl" for="s-infoBayar">Info Pembayaran</label>
+    <textarea class="fi" id="s-infoBayar" data-s="infoBayar" placeholder="Contoh: transfer BCA 1234567890 a/n ...">${esc(s.infoBayar||"")}</textarea>
+    <label class="fl" for="s-pin">PIN Penjual</label>
+    <input class="fi num" id="s-pin" data-s="pin" value="${esc(s.pin ?? "1234")}" inputmode="numeric">
+    <div class="note" style="margin-top:6px">PIN ini yang diminta saat membuka halaman "Kelola toko". Ganti dari bawaan 1234.</div>`;
+}
+
+function adminOngkir(){
+  return DATA.ongkir.map((o,i) => `
+    <div class="acard">
+      <div class="hd">
+        <span class="t">${esc(o.nama||"Opsi baru")}</span>
+        <button class="iconbtn del" type="button" data-hapusongkir="${i}" aria-label="Hapus ${esc(o.nama)}">🗑</button>
+      </div>
+      <input class="fi" data-o="${i}:nama" value="${esc(o.nama)}" placeholder="Nama kurir" aria-label="Nama kurir">
+      <div style="height:9px"></div>
+      <div class="mini2">
+        <input class="fi" data-o="${i}:estimasi" value="${esc(o.estimasi||"")}" placeholder="Estimasi" aria-label="Estimasi">
+        <input class="fi num" data-o="${i}:harga" value="${o.harga}" inputmode="numeric" placeholder="Ongkir" aria-label="Ongkir">
+      </div>
+    </div>`).join("") + `<button class="addbtn" type="button" id="tambahongkir">+ Tambah Opsi Kirim</button>`;
+}
+
+/* ---------- render ---------- */
+function render(){
+  const app = el("app");
+  bersihkanBar();
+  if(screen === "admin"){ app.innerHTML = viewAdmin(); pasangAdmin(); return; }
+
+  app.innerHTML =
+    screen === "gate"       ? viewGate() :
+    screen === "keranjang"  ? viewKeranjang() :
+    screen === "data"       ? viewData() :
+    screen === "konfirmasi" ? viewKonfirmasi() :
+    screen === "selesai"    ? viewSelesai() :
+                              viewKatalog();
+
+  if(screen === "katalog"){
+    const n = jumlah();
+    const bar = document.createElement("div");
+    bar.className = "cartbar";
+    bar.innerHTML = `<button class="in" type="button" data-go="keranjang">
+        <span class="ic">${IC_CART}<span class="bdg num">${n}</span></span>
+        <span><span class="lb">Lihat Keranjang</span><span class="am num">${rp(subtotal())}</span></span>
+        <span class="go">›</span>
+      </button>`;
+    if(!n) bar.hidden = true;
+    document.body.appendChild(bar);
+  }
+  if(screen === "data") pasangFormData();
+  if(screen === "admin") pasangAdmin();
+  if(screen === "gate") pasangGate();
+}
+
+function pasangGate(){
+  const masuk = () => {
+    const pin = String(DATA.shop.pin ?? "1234");
+    if(el("i-pin").value.trim() === pin){ screen = "admin"; window.scrollTo(0,0); render(); }
+    else { el("e-pin").hidden = false; el("i-pin").classList.add("err"); }
+  };
+  el("masuk").addEventListener("click", masuk);
+  el("i-pin").addEventListener("keydown", e => { if(e.key === "Enter") masuk(); });
+}
+
+function bersihkanBar(){ document.querySelectorAll(".cartbar").forEach(b => b.remove()); }
+
+function go(s){
+  bersihkanBar();
+  if(s === "konfirmasi" && !validasi()) return;
+  if(s !== "konfirmasi") viewKonfirmasi.kode = null;
+  screen = s; tried = false;
+  window.scrollTo(0,0);
+  render();
+}
+
+/* form data pembeli */
+function pasangFormData(){
+  [["i-nama","nama"],["i-wa","wa"],["i-alamat","alamat"],["i-catatan","catatan"]].forEach(([id,k]) => {
+    const n = el(id);
+    n.addEventListener("input", () => { buyer[k] = n.value; save(KEY_BUYER, buyer); if(tried) validasi(); });
+  });
+  document.querySelectorAll('input[name="ongkir"]').forEach(r => {
+    r.addEventListener("change", () => { buyer.ongkir = Number(r.value); save(KEY_BUYER, buyer); render(); });
+  });
+}
+function validasi(){
+  tried = true;
+  const cek = [
+    ["i-nama","e-nama", v => v.trim().length > 0],
+    ["i-wa","e-wa", v => v.replace(/\D/g,"").length >= 9],
+    ["i-alamat","e-alamat", v => v.trim().length > 0]
+  ];
+  let ok = true, first = null;
+  cek.forEach(([id,eid,fn]) => {
+    const n = el(id); if(!n) return;
+    const good = fn(n.value);
+    n.classList.toggle("err", !good);
+    el(eid).hidden = good;
+    if(!good){ ok = false; first = first || n; }
+  });
+  if(first) first.scrollIntoView({behavior:"smooth", block:"center"});
+  return ok;
+}
+
+/* admin: simpan tiap ketikan */
+function simpanData(){ save(KEY_DATA, DATA); }
+function pasangAdmin(){
+  document.querySelectorAll("[data-p]").forEach(n => {
+    const [i,k] = n.dataset.p.split(":");
+    n.addEventListener(n.type === "checkbox" ? "change" : "input", () => {
+      const p = DATA.produk[i];
+      p[k] = n.type === "checkbox" ? n.checked : (k === "harga" ? Number(String(n.value).replace(/\D/g,"")||0) : n.value);
+      simpanData();
+    });
+  });
+  document.querySelectorAll("[data-s]").forEach(n => {
+    n.addEventListener("input", () => { DATA.shop[n.dataset.s] = n.value; simpanData(); });
+  });
+  document.querySelectorAll("[data-o]").forEach(n => {
+    const [i,k] = n.dataset.o.split(":");
+    n.addEventListener("input", () => {
+      DATA.ongkir[i][k] = k === "harga" ? Number(String(n.value).replace(/\D/g,"")||0) : n.value;
+      simpanData();
+    });
+  });
+
+  el("tambah")?.addEventListener("click", () => {
+    DATA.produk.push({id:"p"+Date.now(), nama:"", ket:"", harga:0, emoji:"🍽", kategori:"Lainnya", aktif:true});
+    simpanData(); render();
+  });
+  el("tambahongkir")?.addEventListener("click", () => {
+    DATA.ongkir.push({nama:"", estimasi:"", harga:0}); simpanData(); render();
+  });
+  el("unduh")?.addEventListener("click", unduhData);
+  el("salin")?.addEventListener("click", async () => {
+    try{ await navigator.clipboard.writeText(JSON.stringify(DATA, null, 2)); toast("Data toko tersalin"); }
+    catch(e){ toast("Gagal menyalin — pakai tombol Unduh"); }
+  });
+  el("reset")?.addEventListener("click", () => {
+    if(!confirm("Kembalikan semua data ke versi yang tertanam di halaman ini? Perubahan kamu akan hilang.")) return;
+    DATA = structuredClone(BAKED);
+    try{ localStorage.removeItem(KEY_DATA); }catch(e){}
+    render(); toast("Data dikembalikan");
+  });
+}
+
+async function unduhData(){
+  const isi = JSON.stringify(DATA, null, 2);
+  const nama = "data-toko.json";
+  try{
+    const dl = await window.claude?.use?.("downloads");
+    if(dl){ await dl.save({filename:nama, data:isi}); toast("File data-toko.json tersimpan"); return; }
+  }catch(e){}
+  try{
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([isi], {type:"application/json"}));
+    a.download = nama; document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(()=>URL.revokeObjectURL(a.href), 4000);
+    toast("File data-toko.json diunduh");
+  }catch(e){ toast("Tidak bisa mengunduh — pakai tombol Salin"); }
+}
+
+/* ---------- event global ---------- */
+document.addEventListener("click", e => {
+  const t = e.target.closest("[data-q],[data-go],[data-kat],[data-atab],[data-hapus],[data-hapusongkir]");
+  if(!t) return;
+
+  if(t.dataset.q){ const [id,q] = t.dataset.q.split(":"); setCart(id, Number(q)); return; }
+  if(t.dataset.kat){ kategori = t.dataset.kat; bersihkanBar(); render(); return; }
+  if(t.dataset.atab){ adminTab = t.dataset.atab; render(); return; }
+  if(t.dataset.hapus !== undefined){
+    const i = Number(t.dataset.hapus);
+    if(confirm(`Hapus produk "${DATA.produk[i].nama || "tanpa nama"}"?`)){ DATA.produk.splice(i,1); simpanData(); render(); }
+    return;
+  }
+  if(t.dataset.hapusongkir !== undefined){
+    const i = Number(t.dataset.hapusongkir);
+    if(confirm(`Hapus opsi kirim "${DATA.ongkir[i].nama || "tanpa nama"}"?`)){ DATA.ongkir.splice(i,1); simpanData(); render(); }
+    return;
+  }
+  if(t.dataset.go) go(t.dataset.go);
+});
+
+// setelah pesan dilempar ke WhatsApp: kosongkan keranjang, tampilkan layar terima kasih
+document.addEventListener("click", e => {
+  if(!e.target.closest("#kirim")) return;
+  setTimeout(() => {
+    cart = {}; save(KEY_CART, cart);
+    bersihkanBar(); screen = "selesai"; viewKonfirmasi.kode = null;
+    window.scrollTo(0,0); render();
+  }, 400);
+});
+
+render();
+</script>
+</body>
+</html>
